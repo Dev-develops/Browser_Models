@@ -1,0 +1,15 @@
+<script>
+    // this is the url of the csv and will be accessed through http stack.
+    const csvUrl = 'iris.csv';
+
+    // the tf.data.csv loads the url and parses the data of the loaded csv file.
+    const trainingData = tf.data.csv(csvUrl, {
+        columnConfigs: {
+            // label specified.
+            species: {
+                isLabel: true
+            }
+        }
+    })
+</script>
+
