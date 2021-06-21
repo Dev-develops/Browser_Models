@@ -3,6 +3,7 @@
     const csvUrl = 'iris.csv';
 
     // the tf.data.csv loads the url and parses the data of the loaded csv file.
+    // the data is returned in the form of dictionaries.
     const trainingData = tf.data.csv(csvUrl, {
         columnConfigs: {
             // label specified.
@@ -11,5 +12,22 @@
             }
         }
     })
+
+    // handling the converted data
+    const convertedData = 
+        trainingData.map(({xs, ys}) => {
+            const labels = [
+                ys.species == "setosa" ? 1 : 0,
+                ys.species == "virginica" ? 1 : 0,
+                ys.species == "versicolor" ? 1 : 0
+            ]
+
+            return { xs: Object.values(xs), ys: Object.values(labels)};
+        }).batch(10);
 </script>
 
+<!-- One Hot Encoding
+
+    It involves the marking of the desired output i.e. the hot value.
+    
+-->

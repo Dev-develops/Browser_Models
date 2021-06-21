@@ -1,3 +1,40 @@
 <!-- Designing a NN with 4 nodes at start and 4 output nodes (features) 
     along with a hidden layer of 5 nodes
 -->
+
+<script>
+    const model = tf.sequential();
+    // sequential model
+
+    model.add(tf.layers.dense({
+        inputShape: [numOfFeatures],
+        activation: "sigmoid", units: 5
+    }))
+
+    model.add(tf.layers.dens({activation: "softmax", units: 3}));
+    // softmax??
+
+    // compiling the model
+    model.compile({
+        loss: "categoricalCrossentropy",
+        optimizer: tf.train.adam(0.06) //learning rate of the system
+    })
+    
+    // doing Data training
+    await model.fitDataset(
+        convertedData,
+        {
+            epochs: 100,
+            callbacks: {
+                onEpochEnd: async (epoch, logs) => {
+                    console.log("E: " + epoch + " Loss: " + logs.loss);
+                }
+            }
+        }
+    )
+
+    // inferencing and predict data
+    const testVal = tf.tensor2d([5.8, 2.7, 5.1, 1.9], [1, 4]);
+    const prediction = model.predict(testVal);
+    alert(prediction);
+</script>
